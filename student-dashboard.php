@@ -1,0 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) { header('Location: student-login.php'); exit(); }
+include_once 'includes/dbcon.php';
+include_once 'includes/student-nav.php';
+$student_name = htmlspecialchars($_SESSION['student_name'] ?? 'Student', ENT_QUOTES, 'UTF-8');
+?>
+<main class="portal-shell"><div class="portal-layout"><aside class="portal-side-column"><?php include 'student-sidebar.php'; ?></aside><section class="portal-main"><div class="portal-welcome"><div><span class="portal-eyebrow">BEAMING LIGHT ACADEMY · LAGOS</span><h1>Welcome back, <?php echo $student_name; ?>.</h1><p>Your student space for school information, results and messages.</p></div><div class="welcome-icon"><i class="fa-solid fa-graduation-cap"></i></div></div>
+<div class="portal-section-title"><div><span class="portal-eyebrow">YOUR DETAILS</span><h2>Student overview</h2></div></div><div class="student-stat-grid">
+<div class="student-stat"><span class="stat-icon"><i class="fa-regular fa-id-card"></i></span><div><p>Student ID</p><strong><?php echo htmlspecialchars((string)($_SESSION['student_id'] ?? '—'), ENT_QUOTES, 'UTF-8'); ?></strong></div></div>
+<div class="student-stat"><span class="stat-icon"><i class="fa-regular fa-envelope"></i></span><div><p>Registered email</p><strong><?php echo htmlspecialchars($_SESSION['student_email'] ?? '—', ENT_QUOTES, 'UTF-8'); ?></strong></div></div>
+<div class="student-stat"><span class="stat-icon"><i class="fa-solid fa-book-open"></i></span><div><p>Class / level</p><strong><?php echo htmlspecialchars($_SESSION['student_course'] ?? '—', ENT_QUOTES, 'UTF-8'); ?></strong></div></div>
+<div class="student-stat"><span class="stat-icon"><i class="fa-solid fa-phone"></i></span><div><p>Phone number</p><strong><?php echo htmlspecialchars($_SESSION['student_phone'] ?? '—', ENT_QUOTES, 'UTF-8'); ?></strong></div></div>
+</div><div class="portal-section-title updates-heading"><div><span class="portal-eyebrow">FROM YOUR SCHOOL</span><h2>Learning & school reminders</h2></div></div><div class="portal-updates"><article class="portal-update"><img src="image/bg-img-3.jpg" alt="Students learning together"><div><h3>Keep your learning routine consistent</h3><p>Review your class notes regularly, practise questions and ask your teachers for help when you need it.</p></div></article><article class="portal-update"><img src="image/lec-2.jpg" alt="Classroom learning"><div><h3>Build strong study habits</h3><p>Plan your study time, complete assignments carefully and seek help early when a topic feels challenging.</p></div></article><article class="portal-update"><img src="image/bg-img-4.jpg" alt="School community"><div><h3>Be ready to learn</h3><p>Respect, punctuality, honesty and teamwork help everyone feel welcome and ready to succeed.</p></div></article></div><div class="portal-help"><i class="fa-regular fa-circle-question"></i><div><strong>Need help with your account?</strong><p>Visit My Profile to check your details, or use Messages to contact the school.</p></div></div></section></div></main>
+<?php include 'includes/footer.php'; ?>

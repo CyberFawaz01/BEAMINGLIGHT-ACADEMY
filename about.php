@@ -1,0 +1,15 @@
+<?php include_once 'includes/header.php'; include_once 'includes/nav.php'; ?>
+<main>
+  <section class="page-hero"><img src="image/bg-img.jpg" alt="Students learning in a classroom"><div class="container"><div class="section-kicker">Who we are</div><h1>About Beaming Light Academy</h1><p>A secondary-school community focused on learning, character and helping every student discover their potential.</p></div></section>
+  <section class="section-pad"><div class="container"><div class="row align-items-center g-5">
+    <div class="col-lg-6 content-copy"><div class="section-kicker">Our school</div><h2 class="section-heading">A supportive place to learn, grow and prepare for tomorrow.</h2><p>Beaming Light Academy aims to provide students with a positive learning environment where they can build knowledge, develop good habits and grow into responsible members of their community.</p><p>We believe that education works best when students, teachers and families share a commitment to effort, respect and continuous improvement.</p><ul class="check-list"><li><i class="fa-solid fa-circle-check"></i><span>Encouraging curiosity and a love of learning</span></li><li><i class="fa-solid fa-circle-check"></i><span>Promoting integrity, respect and self-discipline</span></li><li><i class="fa-solid fa-circle-check"></i><span>Helping learners prepare for their next stage of education</span></li></ul></div>
+    <div class="col-lg-6"><img src="image/school-bg-3.jpg" alt="Students learning together at school" class="img-fluid rounded-4 shadow-sm" loading="lazy"></div>
+  </div></div></section>
+  <section class="section-pad section-soft"><div class="container"><div class="text-center mb-5"><div class="section-kicker">Our guiding principles</div><h2 class="section-heading">What we stand for</h2></div><div class="row g-4">
+    <div class="col-md-4"><article class="values-card"><div class="feature-icon"><i class="fa-solid fa-book-open"></i></div><h3>Our mission</h3><p>To support students with purposeful teaching, a positive environment and opportunities to develop academically and personally.</p></article></div>
+    <div class="col-md-4"><article class="values-card"><div class="feature-icon"><i class="fa-solid fa-eye"></i></div><h3>Our vision</h3><p>To help young people become confident learners and responsible citizens who are prepared to contribute positively to society.</p></article></div>
+    <div class="col-md-4"><article class="values-card"><div class="feature-icon"><i class="fa-solid fa-handshake-angle"></i></div><h3>Our values</h3><p>Respect, integrity, diligence, kindness and a willingness to keep learning guide the way we work together.</p></article></div>
+  </div></div></section>
+  <section class="section-pad"><div class="container"><div class="cta-panel"><div><div class="section-kicker">Join our school community</div><h2 class="mb-2">We would be glad to hear from you.</h2><p>Contact the school for enquiries and further information.</p></div><a href="contact.php" class="btn-school">Get in touch <i class="fa-solid fa-arrow-right"></i></a></div></div></section>
+</main>
+<?php include 'includes/footer.php'; ?>

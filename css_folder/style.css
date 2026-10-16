@@ -1,0 +1,265 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img{
+  width: 100%;
+}
+
+body{
+ font-family:"Poppins", sans-serif;
+
+
+}
+
+:root {
+  --primary-color: #2986CC;
+  --secondary-color: #007B77;
+  --accent-color: #FF9800;
+  --neutral-light: #F5F5F5;
+  --neutral-dark: #333333;
+}
+
+/* FIRST SECTION */
+.first-section{
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+}
+
+.bg-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffff;
+  text-align: center;
+  padding: 20px;
+  z-index: 2;
+}
+
+.first-section-content{
+  z-index: 2;
+}
+
+.btn-style{
+  background-color: skyblue;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer ;
+  
+}
+
+
+/* SECOND SECTION */
+.service-section{
+  background-color: #F5F5F5;
+}
+
+.service-card{
+  background-color:skyblue;
+  border: none;
+  border-radius: 10px;
+}
+
+.service-card:hover{
+  transform: translateY(-5px);
+}
+
+.service-icon{
+  font-size: 1.9rem;
+  margin-bottom: 0.85rem;
+  color: var(--primary-color);
+}
+
+.card .card-text{
+  font-size: 1rem;
+  opacity: 0.9;
+  color:white;
+}
+.card .card-texts{
+  font-size:1.5rem;
+  color:black;
+}
+
+
+/* THIRD-SECTION */
+.lecturers-section{
+  background-color: #F5F5F5;
+  padding: 60px 0;
+  
+}
+
+.section-title{
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: skyblue;
+  text-align: center;
+ 
+
+}
+
+.lecturer-card {
+  border: none;
+  overflow: hidden;
+}
+
+
+
+.lecturer-img {
+  width: 90%;
+  height: 250px;
+  object-fit: cover;
+  
+}
+
+.lecturer-name{
+  color: black;
+}
+
+.lecturer-description{
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.lecturer-card:hover img{
+  transform: scale(0.8);
+}
+
+
+
+.card-body{
+  padding: 1rem;
+}
+
+
+.social-icons .social-icon{
+  color:skyblue;
+  font-size: 18px;
+  margin: 0.5rem;
+}
+
+
+
+.social-icons a:hover{
+  color: var(--accent-color);
+}
+
+
+/* FOURTH SECTION */
+
+.video-tour-section{
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  overflow: hidden;
+}
+
+.bg-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.overlay-2{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffff;
+  text-align: center;
+  padding: 20px;
+  z-index: 2;
+}
+
+.fourth-section-content{
+  z-index: 3;
+}
+
+.play-btn{
+  background-color: skyblue;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+}
+
+.play-btn i{
+  color: #000;
+}
+
+.play-btn:hover{
+  background-color: white;
+}
+
+/* FIFTH SECTION */
+
+.news-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  background-color: #ddd;
+}
+
+.news-date{
+  color:grey
+}
+
+.news-title, .event-title {
+  font-weight: 600;
+}
+
+.news-text, .event-text {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+
+
+.event-date-box {
+  min-width: 70px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.event-date-box h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+
+
+
