@@ -1,6 +1,7 @@
 # Beaming Light Academy Website
 
 A PHP and MySQL secondary-school website project featuring public information pages, student registration and login, a student dashboard, results, contact messages, and an administrator area. The interface uses a **Burgundy & Ivory** colour palette.
+/screenshot/fullpage_snapshot_beaminglightacademy_freedev_app_2026-10-13-07-18-34.png
 
 ## Features
 
