@@ -1,17 +1,22 @@
 <?php 
+ require_once "includes/admin-guard.php";
  require_once "includes/dbcon.php";
  include "includes/student-nav.php";
- include "includes/sidebar.php";
+ include "includes/admin_sidebar.php";
 ?>
 
 <?php 
 if (isset($_GET['id'])) {
-    $student_id = $_GET['id'];
-    $query = "SELECT * FROM registration WHERE id = $student_id";
-    $result = mysqli_query($con, $query);
+    $student_id = (int)$_GET['id'];
+    $stmt = mysqli_prepare($con, "SELECT * FROM registration WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $student_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $student = $result ? mysqli_fetch_assoc($result) : null;
+    mysqli_stmt_close($stmt);
 
-    if (mysqli_num_rows($result) == 1) {
-        $student = mysqli_fetch_assoc($result);
+    if ($student) {
+        $student = array_map(fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'), $student);
     } else {
         echo "Student not found";
         exit();
@@ -36,7 +41,7 @@ if (isset($_GET['id'])) {
            <h3 class="card-title">Edit Student</h3> 
            <form action="student-update.php" method="POST" enctype="multipart/form-data">
              <div class="mb-4">
-                <input type="text" name="id" value="<?= $student['id'] ?>">
+                <input type="hidden" name="id" value="<?= $student['id'] ?>">
              </div>
              
               <div class="mb-3">
@@ -69,8 +74,8 @@ if (isset($_GET['id'])) {
 
               <label>Change Image</label>
               <input type="file" name="image" class="form-control mb-2">
-              <?php if (!empty($student['image'])) :?>
-                  <img src="../school-website/student-image/<?= $student['image'] ?>" alt="Student Photo" class="img-thumbnail mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+              <?php if (!empty($student['images'])) :?>
+                  <img src="../school-website/student-image/<?= $student['images'] ?>" alt="Student Photo" class="img-thumbnail mb-2" style="width: 100px; height: 100px; object-fit: cover;">
               <?php endif; ?>
               <button type="submit" name="update_student" class="btn btn-success" value="update">Update Student</button>
            </form> 

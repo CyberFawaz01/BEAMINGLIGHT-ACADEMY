@@ -1,13 +1,13 @@
 
 <?php
-session_start();
-require_once 'includes/dbcon.php';  
+require_once "includes/student-guard.php";
+require_once 'includes/dbcon.php';
 
-$student_id = $_SESSION['student_id'];
-
-$student_id =$_SESSION['student_id'];
-    $sql = "SELECT * FROM contact_messages WHERE student_id = '$student_id'";
-    $result= mysqli_query($con,$sql);
+$student_id = (int)$_SESSION['student_id'];
+$stmt = mysqli_prepare($con, "SELECT * FROM contact_messages WHERE student_id = ?");
+mysqli_stmt_bind_param($stmt, "i", $student_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 ?>
 
 <?php

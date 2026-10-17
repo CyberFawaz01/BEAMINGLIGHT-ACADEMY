@@ -7,6 +7,7 @@
   }
 
 include "includes/dbcon.php";
+require_once "includes/upload-helper.php";
 include "includes/header.php";
 include "includes/nav.php";
 
@@ -58,12 +59,14 @@ if(isset($_POST['submit'])) {
         $email = $_POST['email'];
 
         //check if email already exist
-        $checkemail= "SELECT * FROM registration WHERE email = '$email'";
-        $result = mysqli_query($con,$checkemail);
-
-        if(mysqli_num_rows($result)>0){
+        $chk = mysqli_prepare($con, "SELECT id FROM registration WHERE email = ?");
+        mysqli_stmt_bind_param($chk, "s", $email);
+        mysqli_stmt_execute($chk);
+        mysqli_stmt_store_result($chk);
+        if (mysqli_stmt_num_rows($chk) > 0) {
             $errors['email']="Email already exist";
         }
+        mysqli_stmt_close($chk);
     }
     
 
@@ -83,15 +86,16 @@ if(isset($_POST['submit'])) {
         $errors['images']= 'Input your image';
     }
     else{
-        $images = $_FILES['images']['name'];
-        $target_dir = "student-image/";
-        $target_file = $target_dir . basename($images);
-        move_uploaded_file($_FILES["images"]["tmp_name"],$target_file);
+        $images = save_image_upload($_FILES['images'], "student-image/");
+        if ($images === null) {
+            $errors['images'] = 'Upload a JPG, PNG, GIF or WebP image under 2 MB';
+        }
     }
 
     if(!array_filter($errors)){
-         $sql = "INSERT INTO registration(full_name,course,phone_num,email,pwd,images,date) VALUES('$fullname','$course','$phoneNum','$email','$pwd','$images',NOW())";
-             if(mysqli_query($con,$sql)){
+         $ins = mysqli_prepare($con, "INSERT INTO registration(full_name,course,phone_num,email,pwd,images,date) VALUES(?,?,?,?,?,?,NOW())");
+         mysqli_stmt_bind_param($ins, "ssssss", $fullname, $course, $phoneNum, $email, $pwd, $images);
+             if(mysqli_stmt_execute($ins)){
                echo "<div class='alert alert-success'>Registration successful</div>";
                echo "<script>
                setTimeout(function(){
@@ -100,7 +104,7 @@ if(isset($_POST['submit'])) {
             </script>";
              }
              else{
-                    echo 'query error' .mysqli_error($con);
+                    echo 'Registration failed. Please try again.';
              }
                   
             }

@@ -1,6 +1,6 @@
 <?php   
+require_once "includes/admin-guard.php";
 include "includes/dbcon.php";
-session_start();
 ?>
 
 <?php

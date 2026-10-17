@@ -1,35 +1,49 @@
 <?php
 session_start();
-?>
-
-<?php 
-include "includes/nav.php";
 require_once "includes/dbcon.php";
 
-?>
-
-
-<?php
+$loginError = '';
 if (isset($_POST['login'])) {
-    $username = mysqli_real_escape_string($con, $_POST['username']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    // Check if the username and password are correct
-    $query = "SELECT * FROM users WHERE user_name='$username' AND user_password='$password'";
-    $result = mysqli_query($con, $query);
-    $check = mysqli_num_rows($result);
-    if ($check) {
-        // If the username and password are correct, set session variables
-        $_SESSION['user_name'] = $username;
-        
-        echo "<script>window.open('admin_dashboard.php', '_self')</script>";
-        exit();
-    } else {
-        // If the username and password are incorrect, show an error message
-        echo "<script>alert('Invalid username or password. Please try again.')</script>";
-        
+    $stmt = mysqli_prepare($con, "SELECT user_id, user_name, user_password FROM users WHERE user_name = ? LIMIT 1");
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $admin = $res ? mysqli_fetch_assoc($res) : null;
+    mysqli_stmt_close($stmt);
+
+    $ok = false;
+    if ($admin) {
+        $stored = (string)$admin['user_password'];
+        if (password_get_info($stored)['algo']) {
+            // normal case: the password is stored as a hash
+            $ok = password_verify($password, $stored);
+        } elseif (hash_equals($stored, $password)) {
+            // old plain-text password: accept it once, then store it as a hash
+            $ok = true;
+            $newHash = password_hash($password, PASSWORD_DEFAULT);
+            $up = mysqli_prepare($con, "UPDATE users SET user_password = ? WHERE user_id = ?");
+            mysqli_stmt_bind_param($up, "si", $newHash, $admin['user_id']);
+            mysqli_stmt_execute($up);
+            mysqli_stmt_close($up);
+        }
     }
-      
+
+    if ($ok) {
+        session_regenerate_id(true);               // new session id after login
+        $_SESSION['user_name'] = $admin['user_name'];
+        $_SESSION['is_admin']  = true;
+        header('Location: admin_dashboard.php');
+        exit();
+    }
+    $loginError = 'Invalid username or password. Please try again.';
+}
+
+include "includes/nav.php";
+if ($loginError !== '') {
+    echo "<script>alert(" . json_encode($loginError) . ")</script>";
 }
 ?>
 

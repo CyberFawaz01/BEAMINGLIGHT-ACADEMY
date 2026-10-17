@@ -1,11 +1,11 @@
 <?php 
- session_start();
+ require_once "includes/admin-guard.php";
  include 'includes/dbcon.php'; 
 
 if (isset($_POST['send'])) {
-  $student_id = !empty($_POST['student_id']) ? $_POST['student_id'] :null;
-  $subject = mysqli_real_escape_string($con, $_POST['subject']);
-  $message = mysqli_real_escape_string($con, $_POST['message']);
+  $student_id = !empty($_POST['student_id']) ? (int)$_POST['student_id'] : null;
+  $subject = trim($_POST['subject'] ?? '');
+  $message = trim($_POST['message'] ?? '');
   
   $sql = "INSERT INTO `contact_messages`(`student_id`, `user_subject`, `user_message`, `created_at_time`) VALUES (?,?,?,NOW())";
   $stmt = mysqli_prepare($con, $sql);
@@ -13,7 +13,6 @@ if (isset($_POST['send'])) {
 
   if (mysqli_stmt_execute($stmt)) {
     echo "<script>alert('Message sent successfully!'); window.location='admin-message.php';</script> ";
-    $_SESSION['student_id'] = $student_id;
   } else {
     echo "<script>alert('Error sending message. Please try again.');</script>";
   }

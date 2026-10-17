@@ -1,19 +1,17 @@
-<?php 
-include('includes/dbcon.php');
+<?php
+require_once "includes/admin-guard.php";
+require_once "includes/dbcon.php";
 
-if(isset($_GET['id'])) {
-  $id = intval($_GET['id']); {
-  $delete = "DELETE FROM `messages` WHERE id = $id";
-  
-  if (mysqli_query($con, $delete)) {
-     echo "<script>alert('Message deleted sucessfully'); window.location= 'admin-manage-messages.php';</script>";
-  }else{
-    echo "<script>alert('failed to delete message'); window.location= 'admin-manage-messages.php';</script>";
-  }
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if ($id > 0) {
+    try {
+        $stmt = mysqli_prepare($con, "DELETE FROM `messages` WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    } catch (mysqli_sql_exception $e) {
+        // the table may not exist in every setup; ignore and go back
+    }
 }
-}else{
-  header("location: admin_manage_messages.php");
-}
-
-?>
-
+header("Location: admin-message.php");
+exit();
